@@ -8,7 +8,7 @@ module.exports = defineConfig({
     baseUrl: "https://jupiter.cloud.planittesting.com/#/",
     viewportHeight: 960,
     viewportWidth: 1536,
-    defaultCommandTimeout: 10000,
+    defaultCommandTimeout: 20000,
     pageLoadTimeout: 20000,
     requestTimeout: 10000,
     responseTimeout: 10000,
