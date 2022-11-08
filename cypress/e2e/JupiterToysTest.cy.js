@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import home from "../support/pageobjectmodel/home-actions";
 import contact from "../support/pageobjectmodel/contact-actions";
+import shop from "../support/pageobjectmodel/shop-actions";
+import cart from "../support/pageobjectmodel/cart-actions";
 describe("Jupiter Toys Tests", () => {
   it("TC1- Validate field error messages for contact page", () => {
     cy.visit("/#/home");
@@ -69,5 +71,44 @@ describe("Jupiter Toys Tests", () => {
     });
   }
 
-  it.skip("TC3 - Buy stuffed toys and validate total amount in Cart page", () => {});
+  it("TC3 - Buy stuffed toys and validate total amount in Cart page", () => {
+    cy.visit("/#/home");
+
+    // Navigate to Shop
+    shop
+      .clickNavigateToShop()
+
+      // Buy 2 pcs Stuffed Frog
+      .validateStuffedFrog()
+      .clickBuyStuffedFrog(2)
+
+      // Buy 5 pcs Fluffy Bunny
+      .validateFluffyBunny()
+      .clickBuyFluffyBunny(5)
+
+      // Buy 3 pcs Valentine Bear
+      .validateValentineBear()
+      .clickBuyValentineBear(3);
+
+    // Go to Cart Page
+    cart
+      .clickNavigateToCart()
+      // Validate Stuffed Frog Price and Subtotal
+      .validateSelectedStuffedFrog()
+      .validateStuffedFrogSubtotal()
+      .validateStuffedFrogPrice()
+
+      // Validate Fluffy Bunny Price and Subtotal
+      .validateSelectedFluffyBunny()
+      .validateFluffyBunnySubtotal()
+      .validateFluffyBunnyPrice()
+
+      // Validate Valentine Bear Price and Subtotal
+      .validateSelectedValentineBear()
+      .validateValentineBearSubtotal()
+      .validateValentineBearPrice()
+
+      // Validate Total of Subtotal then Compare
+      .validateTotal();
+  });
 });
