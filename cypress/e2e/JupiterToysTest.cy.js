@@ -51,7 +51,7 @@ describe("Jupiter Toys Tests", () => {
       let email = faker.internet.email();
       let message = faker.lorem.sentence();
 
-      // Go to Contact Page and assert default banner text
+      // Go to Contact Page and fillup required fields
       contact
         .clickNavigateToContact()
         .validateAlertBanner("We welcome your feedback - tell it how it is.")
