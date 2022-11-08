@@ -11,7 +11,12 @@ module.exports = defineConfig({
     defaultCommandTimeout: 20000,
     pageLoadTimeout: 20000,
     requestTimeout: 10000,
-    responseTimeout: 10000,
-    video:false
+    responseTimeout: 10000
   },
+  "reporter": "mochawesome",
+  "reporterOptions": {
+      "overwrite": false,
+      "html": false,
+      "json": true
+  }
 });
