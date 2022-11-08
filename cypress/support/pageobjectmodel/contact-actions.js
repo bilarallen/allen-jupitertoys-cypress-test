@@ -51,6 +51,29 @@ class ContactActions {
 
     return this;
   }
+
+  waitForLoadingToDisappear() {
+    contactObjects.contact
+      .progressBar()
+      .should("be.visible")
+      .then(() => {
+        contactObjects.contact.progressBar().should("not.exist");
+      });
+
+    return this;
+  }
+
+  validateSuccessSubmission(name) {
+    contactObjects.contact.textSuccessBanner().should("contain.text", name);
+
+    return this;
+  }
+
+  validateSuccessfulBackButton() {
+    contactObjects.contact.btnBack().should("be.visible");
+
+    return this;
+  }
 }
 
 export default new ContactActions();

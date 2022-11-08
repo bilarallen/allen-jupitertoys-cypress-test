@@ -9,6 +9,7 @@ class ContactObjects {
     textSuccessBanner: () => cy.get(".alert-success"),
     btnBack: ()  => cy.get("[ng-click='goBack()']"),
     btnContact: () => cy.get("#nav-contact"),
+    progressBar: () => cy.get(".modal-header")
   };
 }
 
