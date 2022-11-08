@@ -71,7 +71,7 @@ describe("Jupiter Toys Tests", () => {
     });
   }
 
-  it("TC3 - Buy stuffed toys and validate total amount in Cart page", () => {
+  it.only("TC3 - Buy stuffed toys and validate total amount in Cart page", () => {
     cy.visit("/#/home");
 
     // Navigate to Shop
