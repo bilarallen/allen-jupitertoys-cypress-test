@@ -1,7 +1,8 @@
+import { faker } from "@faker-js/faker";
 import home from "../support/pageobjectmodel/home-actions";
 import contact from "../support/pageobjectmodel/contact-actions";
 describe("Jupiter Toys Tests", () => {
-  it.only("TC1- Validate field error messages for contact page", () => {
+  it("TC1- Validate field error messages for contact page", () => {
     cy.visit("/#/home");
     // validate homepage
     home
@@ -31,7 +32,42 @@ describe("Jupiter Toys Tests", () => {
       .validateFieldAlertIsNotDisplayed();
   });
 
-  it("TC2 - Submit contact with valid input and validate successful submission message", () => {});
+  // This test will run 5 times to ensure 100% pass rate
+  for (let i = 1; i <= 5; i++) {
+    it(`TC2 - Submit contact with valid input and validate successful submission message, attempt #${i}`, () => {
+      // Log attempt
+      cy.log("TC2 attempt #: " + i);
 
-  it("TC3 - Buy stuffed toys and validate total amount in Cart page", () => {});
+      cy.visit("/#/home");
+      // validate homepage
+      home
+        .validateLabelHeader()
+        .validateLabelSubheader()
+        .validateLabelWelcomeText()
+        .validateStartShoppingButton();
+
+      // Generate fake test data
+      let name = faker.name.firstName();
+      let email = faker.internet.email();
+      let message = faker.lorem.sentence();
+
+      // Go to Contact Page and assert default banner text
+      contact
+        .clickNavigateToContact()
+        .validateAlertBanner("We welcome your feedback - tell it how it is.")
+        .inputForename(name)
+        .inputEmail(email)
+        .inputMessage(message)
+        .clickSubmit()
+        .waitForLoadingToDisappear()
+
+        // Click Submit and validate the success message
+        .validateSuccessSubmission(
+          `Thanks ${name}, we appreciate your feedback.`
+        )
+        .validateSuccessfulBackButton();
+    });
+  }
+
+  it.skip("TC3 - Buy stuffed toys and validate total amount in Cart page", () => {});
 });
