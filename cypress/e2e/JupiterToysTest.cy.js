@@ -4,7 +4,7 @@ import contact from "../support/pageobjectmodel/contact-actions";
 import shop from "../support/pageobjectmodel/shop-actions";
 import cart from "../support/pageobjectmodel/cart-actions";
 describe("Jupiter Toys Tests", () => {
-  it("TC1- Validate field error messages for contact page", () => {
+  it.only("TC1- Validate field error messages for contact page", () => {
     cy.visit("/#/home");
     // validate homepage
     home
