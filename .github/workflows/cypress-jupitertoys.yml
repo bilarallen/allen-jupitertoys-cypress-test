@@ -2,44 +2,26 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodej
 
 
-name: Generate Cypress Report
-on:
-  push:
-    branches:
-      - 'master'
-      
+name: Allen Jupiter Toys Cypress Tests
+
+on: [push]
+
 jobs:
-  cypress-test:
-    name: Run on Chrome 106
-    runs-on: ubuntu-18.04
-    container: cypress/browsers:node18.12.0-chrome106-ff106
+  cypress-run:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Install cypress and verify
-        run:
-          npm ci
-          $(npm bin)/cypress verfiy
-          
-      - name: Run Cypress tests
-        run: npm run test:chrome
-        continue-on-error: false
-        
-      - name: Copy test execution videos and screenshots
-        run:
-          mkdir public
-          cp -r cypress/videos public/videos
-          cp -r cypress/screenshots public/screenshots
-      
-      - name: Merge test reports
-        run: npm run combine:report
-        
-      - name: Generate HTML report
-        run: npm run generate:report
-        
-      - name: Deploy report page to Github Page
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v4 # use the explicit version number
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-    
+          command: npm run ui-regression
+      - name: Uploading artifact
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-execution-report
+          path: cypress/reports/html
+          retention-days: 30

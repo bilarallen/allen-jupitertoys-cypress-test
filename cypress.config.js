@@ -4,6 +4,7 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      require("cypress-mochawesome-reporter/plugin")(on);
     },
     baseUrl: "https://jupiter.cloud.planittesting.com/#/",
     viewportHeight: 960,
@@ -13,10 +14,12 @@ module.exports = defineConfig({
     requestTimeout: 10000,
     responseTimeout: 10000
   },
-  "reporter": "mochawesome",
-  "reporterOptions": {
-      "overwrite": false,
-      "html": false,
-      "json": true
+  reporter: "cypress-mochawesome-reporter",
+  reporterOptions: {
+    charts: true,
+    reportPageTitle: "allen-jupitertoys-test",
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    saveAllAttempts: false,
   }
 });
