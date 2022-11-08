@@ -9,23 +9,33 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    container: cypress/browsers:node12.16.2-chrome81-ff75
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4 # use the explicit version number
-        with:
-          command: npm run test:chrome
+      - name: Install a project with a clean slate
+        run: |
+          npm ci
+          $(npm bin)/cypress cache path
+          $(npm bin)/cypress cache list
+          $(npm bin)/cypress verify
+      
+      - name: Run Cypress tests
+        run: npm run test:chrome
+        continue-on-error: true
 
-      - name: Uploading artifact
-        uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: cypress-execution-report
-          path: cypress/reports/html
-          retention-days: 30
+      - name: Copy test execution videos
+        run: |
+          mkdir public
+          cp -r cypress/videos public/videos
+
+      - name: Merge test results into one
+        run: npm run report:merge
+
+      - name: Generate HTML report
+        run: npm run report:generate
 
       - name: Deploy report page
         uses: peaceiris/actions-gh-pages@v3

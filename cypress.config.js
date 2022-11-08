@@ -14,12 +14,14 @@ module.exports = defineConfig({
     requestTimeout: 10000,
     responseTimeout: 10000
   },
-  reporter: "cypress-mochawesome-reporter",
+  reporter: "cypress-multi-reporters",
   reporterOptions: {
-    charts: true,
-    reportPageTitle: "allen-jupitertoys-test",
-    embeddedScreenshots: true,
-    inlineAssets: true,
-    saveAllAttempts: false,
+    reporterEnabled: "mochawesome",
+    mochawesomeReporterOptions: {
+        reportDir: "cypress/results/json",
+        overwrite: false,
+        html: false,
+        json: true
+    }
   }
 });
