@@ -202,7 +202,7 @@ class CartActions {
       const totals = $cells
         .toArray()
         .map(function (el) {
-          return el.innerText.replace();
+          return el.innerText;
         })
         .map(function (s) {
           return s.replace("$", "");
