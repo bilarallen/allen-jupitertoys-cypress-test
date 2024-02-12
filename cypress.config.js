@@ -11,16 +11,7 @@ module.exports = defineConfig({
     defaultCommandTimeout: 20000,
     pageLoadTimeout: 20000,
     requestTimeout: 10000,
-    responseTimeout: 10000
-  },
-  reporter: "cypress-multi-reporters",
-  reporterOptions: {
-    reporterEnabled: "mochawesome",
-    mochawesomeReporterOptions: {
-        reportDir: "cypress/results/json",
-        overwrite: false,
-        html: false,
-        json: true
-    }
+    responseTimeout: 10000,
+    projectId: "xs51c1"
   }
 });
